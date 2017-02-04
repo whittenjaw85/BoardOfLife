@@ -1,7 +1,13 @@
-
+/*
+ * Author: J Whitten
+ * Name: AnalogStreamer
+ * Description: Takes analog inputs and streams them in
+ * a simple message structure that can be interpreted elsewhere
+ */
+ 
 //Globals
 /* Structure
- *  0 - START BYTE
+ *  0 - START BYTE (0xAA)
  *  1 - X1H
  *  2 - X1L
  *  3 - Y1H
@@ -12,7 +18,7 @@
  *  8 - Y1L
  *  3 - Y2H
  *  4 - Y2L
- *  5 - END BYTE
+ *  5 - END BYTE (0x55)
  */
  
 enum{ //for code read ease
@@ -26,7 +32,7 @@ enum{ //for code read ease
   Y2L
 };
 
-int vals[] = {0xAA, 0, 0, 0, 0, 0x55};
+int vals[] = {0xAA, 0, 0, 0, 0, 0, 0, 0, 0, 0x55};
 
 void setup() {
   // put your setup code here, to run once:
