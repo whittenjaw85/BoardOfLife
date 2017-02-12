@@ -29,13 +29,17 @@ enum{ //for code read ease
   X2H,
   X2L,
   Y2H,
-  Y2L
+  Y2L,
+  BTN1,
+  BTN2
 };
 
-int vals[] = {0xAA, 0, 0, 0, 0, 0, 0, 0, 0, 0x55};
+uint8_t vals[] = {0xAA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x55};
 
 void setup() {
   // put your setup code here, to run once:
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
   Serial.begin(9600);
 }
 
@@ -43,25 +47,28 @@ int temp = 0;
 void loop() {
   //Sample analog inputs (10-bit) and 
   //place into 8-bit containers
-  temp = analogRead(A0);
+  temp = analogRead(A1);
   vals[X1H] = (temp>>8)&0xff;
   vals[X1L] = temp&0xff;
 
-  temp = analogRead(A1);
+  temp = analogRead(A0);
   vals[Y1H] = (temp>>8)&0xff;
   vals[Y1L] = temp&0xff;
 
-  temp = analogRead(A2);
+  temp = analogRead(A3);
   vals[X2H] = (temp>>8)&0xff;
   vals[X2L] = temp&0xff;
 
-  temp = analogRead(A3);
+  temp = analogRead(A2);
   vals[Y2H] = (temp>>8)&0xff;
   vals[Y2L] = temp&0xff;
 
+  vals[BTN1] = digitalRead(2);
+  vals[BTN2] = digitalRead(3);
+
   //Write the measured values to serial port
-  Serial.write((uint8_t*) vals, 10);
+  Serial.write((uint8_t*) vals, 12);
   
   //Miniscule delay
-  delay(25);
+  delay(100);
 }
